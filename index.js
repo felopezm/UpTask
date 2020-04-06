@@ -11,6 +11,7 @@ const db = require('./config/db');
 
 // import model 
 require('./models/Projects');
+require('./models/Tasks');
 
 db.sync()
     .then(() => console.log('server db conect'))

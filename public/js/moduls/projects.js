@@ -19,7 +19,6 @@ if (btnDelete) {
             if (result.value) {
                 // send petition axios
                 const url = `${location.origin}/projects/${urlProject}`;
-                console.log(url)
                 axios.delete(url, { params: { urlProject } })
                     .then(function (res) {
                         Swal.fire(

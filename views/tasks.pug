@@ -4,9 +4,29 @@ block contenido
     .contenido-principal
         h1 #{namePag} - #{project.name}
 
+        form.agregar-tarea(action=`/projects/${project.url}` method="POST")
+            .campo
+                label(for="tarea") Task:
+                input.nombre-tarea(type="text" name="task" id="task" placeholder="Name Task")
+            .campo.enviar
+                input.boton.nueva-tarea(type="submit" value="Add")
 
+        .listado-pendientes
+            ul
+                if tasks.length
+                    each task in tasks
+                        li.tarea
+                            p= task.task 
+                            .acciones
+                                if task.status
+                                    i.far.fa-check-circle.completo
+                                else 
+                                    i.far.fa-check-circle
+                                i.fas.fa-trash
+                else
+                    p Not task in this Project
 
-
+        //- pre= vardump(tasks)
         .contenedor-acciones
             a(href=`/projects/edit/${project.id}`, class="boton") Edit Project
             button#delete-project(data-project-url=project.url type="button" class="boton eliminar") Delete Project

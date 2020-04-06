@@ -6,6 +6,7 @@ const { body } = require('express-validator/check');
 
 // import controller
 const projectsController = require('../controllers/projectController');
+const taskController = require('../controllers/taskController');
 
 module.exports = function () {
     router.get('/', projectsController.projectsHome);
@@ -27,6 +28,8 @@ module.exports = function () {
     // delete project from axios
     router.delete('/projects/:url', projectsController.deleteProject);
 
+    // add new task
+    router.post('/projects/:url', taskController.addTask);
 
     return router;
 }

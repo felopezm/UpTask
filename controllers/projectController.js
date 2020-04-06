@@ -1,4 +1,5 @@
 const Projects = require('../models/Projects');
+const Tasks = require('../models/Tasks');
 
 exports.projectsHome = async (req, res) => {
     const projects = await Projects.findAll();
@@ -37,7 +38,7 @@ exports.newProject = async (req, res) => {
     }
 }
 
-exports.projectForUrl = async (req, res) => {
+exports.projectForUrl = async (req, res, next) => {
     const projectsPromise = Projects.findAll();
     const projectPromise = Projects.findOne({
         where:{
@@ -47,12 +48,23 @@ exports.projectForUrl = async (req, res) => {
 
     const [projects, project] = await Promise.all([projectsPromise, projectPromise]);
 
+    // get tasks for project
+    const tasks = await Tasks.findAll({
+        where: {
+            projectId: project.id
+        },
+        include: [{
+            model: Projects
+        }]
+    });
+
     if(!project) return next();
 
     res.render('tasks',{
         namePag: 'Tasks of Project',
         projects,
-        project
+        project,
+        tasks
     });
 }
 
