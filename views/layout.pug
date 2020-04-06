@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/normalize.css")
+        link(rel="stylesheet", href="/css/app.css")
+        title #{namePag}
+    body
+        header.barra
+            h1 UpTask - Admin Project 
+            a(href="#") Sign Out
+        
+        main.contenedor
+            aside.contenedor-proyectos
+                .panel.crear-proyecto
+                    a(href="/new-project" class="boton") New Project
+                        span +
+                .panel.lista-proyectos
+                    h2 Projects
+                    ul#projects.projects
+                        if(projects.length)
+                            each project in projects
+                                li
+                                    a(href=`/projects/${project.url}`)= project.name
+                             
+                         
+                    
+            block contenido
+            //- pre= vardump(projects)
+        script(src="/dist/bundle.js")
