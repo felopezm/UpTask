@@ -15,7 +15,7 @@ block contenido
             ul
                 if tasks.length
                     each task in tasks
-                        li.tarea
+                        li.tarea(data-task=task.id)
                             p= task.task 
                             .acciones
                                 if task.status
@@ -27,6 +27,13 @@ block contenido
                     p Not task in this Project
 
         //- pre= vardump(tasks)
+
+        //- advancement project
+        .avance
+            h2 Advancement Project
+            #bar-advance.barra-avance
+                #porcen.porcentaje
+
         .contenedor-acciones
             a(href=`/projects/edit/${project.id}`, class="boton") Edit Project
             button#delete-project(data-project-url=project.url type="button" class="boton eliminar") Delete Project
