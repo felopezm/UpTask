@@ -14,6 +14,7 @@ const Projects = db.define('projects', {
 },
     {
         hooks: {
+            // add uid to url unique
             beforeCreate(project){
                 const url = slug(project.name).toLowerCase();          
                 project.url = `${url}-${shortid.generate()}`;

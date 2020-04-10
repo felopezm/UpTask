@@ -7,6 +7,7 @@ const { body } = require('express-validator/check');
 // import controller
 const projectsController = require('../controllers/projectController');
 const taskController = require('../controllers/taskController');
+const userController = require('../controllers/userController');
 
 module.exports = function () {
     router.get('/', projectsController.projectsHome);
@@ -36,6 +37,10 @@ module.exports = function () {
 
     // update task
     router.delete('/tasks/:id', taskController.deleteTask);
+
+    // new account
+    router.get('/new-account', userController.formNewAccount);
+    router.post('/new-account', userController.newAccount);
 
     return router;
 }
