@@ -1,5 +1,13 @@
 # UpTask
 Update Task Node-Pug
 
-# permissions db
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; // password FLUSH PRIVILEGES
+
+# Run local Create file variables.env
+
+BD_NAME=updasknode
+BD_USER=root
+BD_PASS=root
+BD_HOST=127.0.0.1
+BD_PORT=3306
+
+HOST=localhost

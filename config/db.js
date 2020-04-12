@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
+require('dotenv').config({ path: 'variables.env'});
 
 // Option 1: Passing parameters separately
-const db = new Sequelize('updasknode', 'root', 'root', {
-    host: '127.0.0.1',
+const db = new Sequelize(process.env.BD_NAME, process.env.BD_USER, process.env.BD_PASS, {
+    host: process.env.BD_HOST,
     dialect: 'mysql',
-    port: '3306',
+    port: process.env.BD_PORT,
     operatorAliases: false,
     define: {
         timestamps: false
@@ -16,6 +17,9 @@ const db = new Sequelize('updasknode', 'root', 'root', {
         idle: 10000
     }
 });
+
+//  permissions db
+// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; // password FLUSH PRIVILEGES
 
 // Option 2: Passing a connection URI
 // const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
