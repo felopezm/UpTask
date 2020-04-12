@@ -33,8 +33,14 @@ const Users = db.define('users',{
                 msg: 'The Password can not void'
             }            
         }
-
-    }
+    },
+    active: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
+    token: Sequelize.STRING,
+    expiration: Sequelize.DATE
+    
 },{
     hooks: {
         beforeCreate(user){
@@ -42,6 +48,11 @@ const Users = db.define('users',{
         }
     }
 });
+
+// method perzonalizates
+Users.prototype.checkPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+}
 
 Users.hasMany(Projects);
 

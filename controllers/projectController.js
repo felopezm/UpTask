@@ -2,7 +2,8 @@ const Projects = require('../models/Projects');
 const Tasks = require('../models/Tasks');
 
 exports.projectsHome = async (req, res) => {
-    const projects = await Projects.findAll();
+    const userId = res.locals.user.id;
+    const projects = await Projects.findAll({where: {userId}});
     res.render('index', {
         namePag: 'Proyects',
         projects
@@ -10,7 +11,8 @@ exports.projectsHome = async (req, res) => {
 }
 
 exports.formNewProjec = async (req, res) => {
-    const projects = await Projects.findAll();
+    const userId = res.locals.user.id;
+    const projects = await Projects.findAll({where: {userId}});
     res.render('newProject', {
         namePag: 'New Project',
         projects
@@ -18,7 +20,8 @@ exports.formNewProjec = async (req, res) => {
 }
 
 exports.newProject = async (req, res) => {
-    const projects = await Projects.findAll();
+    const userId = res.locals.user.id;
+    const projects = await Projects.findAll({where: {userId}});
     const { name } = req.body;
     let errores = [];
 
@@ -33,16 +36,19 @@ exports.newProject = async (req, res) => {
             projects
         })
     } else {
-        await Projects.create({ name });
+        const userId = res.locals.user.id;
+        await Projects.create({ name,userId });
         res.redirect('/');
     }
 }
 
 exports.projectForUrl = async (req, res, next) => {
-    const projectsPromise = Projects.findAll();
+    const userId = res.locals.user.id;
+    const projectsPromise = Projects.findAll({where: {userId}});
     const projectPromise = Projects.findOne({
         where:{
-            url:req.params.url
+            url:req.params.url,
+            userId
         }
     });
 
@@ -69,10 +75,12 @@ exports.projectForUrl = async (req, res, next) => {
 }
 
 exports.formEdit = async (req, res) =>{
-    const projectsPromise = Projects.findAll();
+    const userId = res.locals.user.id;
+    const projectsPromise = Projects.findAll({where: {userId}});
     const projectPromise = Projects.findOne({
         where:{
-            id:req.params.id
+            id:req.params.id,
+            userId
         }
     });
 
@@ -86,7 +94,8 @@ exports.formEdit = async (req, res) =>{
 }
 
 exports.updateProject = async (req, res) => {
-    const projects = await Projects.findAll();
+    const userId = res.locals.user.id;
+    const projects = await Projects.findAll({where: {userId}});
     const { name } = req.body;
     let errores = [];
 

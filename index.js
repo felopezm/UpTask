@@ -6,6 +6,7 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 
 // import helpers
 const helpers = require('./helpers');
@@ -43,17 +44,22 @@ app.set('views', path.join(__dirname, './views'));
 // add flash messagers
 app.use(flash());
 
-// session permit navigater for diferent viws
+// session permit navigater for diferent views
 app.use(session({
    secret: 'supersecret',
    resave: false,
    saveUninitialized: false 
 }));
 
+// init passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // use var dum for all app (middleware)
 app.use((req, res, next) => {
     res.locals.vardump = helpers.vardump;
     res.locals.messages = req.flash();
+    res.locals.user = {...req.user} || null;
     next();
 })
 
